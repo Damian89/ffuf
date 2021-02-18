@@ -316,7 +316,7 @@ func (s *Stdoutput) writeResultToFile(resp ffuf.Response) string {
 	var fileContent, fileName, filePath string
 	// Create directory if needed
 	if s.config.OutputDirectory != "" {
-		err := os.MkdirAll(s.config.OutputDirectory, 0755)
+		err := os.MkdirAll(s.config.OutputDirectory, 0777)
 		if err != nil {
 			if !os.IsExist(err) {
 				s.Error(err.Error())
@@ -330,7 +330,7 @@ func (s *Stdoutput) writeResultToFile(resp ffuf.Response) string {
 	fileName = fmt.Sprintf("%x", md5.Sum([]byte(fileContent)))
 
 	filePath = path.Join(s.config.OutputDirectory, fileName)
-	err := ioutil.WriteFile(filePath, []byte(fileContent), 0755)
+	err := ioutil.WriteFile(filePath, []byte(fileContent), 0777)
 	if err != nil {
 		s.Error(err.Error())
 	}
